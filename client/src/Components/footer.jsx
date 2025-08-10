@@ -1,5 +1,5 @@
 import React from "react";
-import "./Footer.css";
+import "/src/Components/footer.css";
 import {
   RiLinkedinFill,
   RiInstagramFill,
@@ -9,8 +9,8 @@ import {
 
 const Footer = () => {
   return (
-    <footer className="footerElement">
-      <div className="footerContent">
+    <footer className="footerElement navbar flex justify-between items-center py-[10px] px-[30px] bg-gradient-to-r from-pink-500 to-yellow-500 rounded-md mb-16">
+      <div className="footerContent flex items-center cursor-pointer">
         <div className="footerLinks">
           <a href="/privacy-policy" className="footerLink">
             Privacy Policy

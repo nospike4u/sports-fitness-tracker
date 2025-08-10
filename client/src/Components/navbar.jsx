@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { CgProfile } from "react-icons/cg";
 import { HiOutlineDocumentText } from "react-icons/hi";
-import "./Navbar.css";
-import logo from "./../assets/logo.png";
+import logo from "./../assets/react.svg";
 import { Link } from "react-router-dom";
 
 const Navbar = () => {
@@ -10,25 +9,25 @@ const Navbar = () => {
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
+
   };
 
-
   return (
-    <div className="navbar flex justify-between items-center px-[30px]">
-      <div className="flex items-center">
+    <div className="navbar flex justify-between items-center py-[10px] px-[30px] bg-gradient-to-r from-pink-500 to-yellow-500 rounded-md mb-16">
+      <div className="flex items-center cursor-pointer">
         <Link to="/" className="flex items-center">
           <img
             src={logo}
             alt="compass logo"
             className="btn btn-ghost btn-circle h-[40px]"
           />
-          <span className="compass ml-2">Compass</span>
+          <span className="compass ml-2 text-white">Compass</span>
         </Link>
       </div>
-      <div className="doc flex items-center ml-[70%]">
+      <div className="doc flex items-center ml-[70%] pr-4">
         <Link to="/documentation" className="flex space-x-1 items-center">
-          <HiOutlineDocumentText className="doc-icon text-xl" />
-          <span className="text-m">Documentation</span>
+          <HiOutlineDocumentText className="doc-icon text-xl text-white" />
+          <span className="text-white">Documentation</span>
         </Link>
       </div>
       <div className="flex-none gap-2">
@@ -40,7 +39,7 @@ const Navbar = () => {
             className="btn btn-ghost btn-circle avatar"
             onClick={toggleDropdown}
           >
-            <CgProfile className="profile-icon text-3xl hover:scale-105" />
+            <CgProfile className="profile-icon text-3xl hover:scale-105 text-white cursor-pointer" />
           </label>
           {/* Dropdown Menu */}
           {isDropdownOpen && (
