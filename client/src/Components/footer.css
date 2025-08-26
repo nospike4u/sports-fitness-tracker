@@ -1,3 +1,10 @@
-.footer {
+/* Footer styles - using Tailwind classes in the component */
 
-  }
+/* Additional hover effects for social icons */
+.social-icon-hover {
+  transition: all 0.3s ease;
+}
+
+.social-icon-hover:hover {
+  transform: translateY(-2px);
+}

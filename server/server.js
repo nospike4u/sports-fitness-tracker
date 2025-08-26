@@ -3,6 +3,8 @@ import cors from "cors";
 import dotenv from "dotenv";
 import usersRouter from "./routes/users/usersRouter.js";
 import healthStatsRouter from "./routes/healthStatsRoutes.js";
+import oauthRouter from "./routes/oauthRoutes.js";
+import fitbitRouter from "./routes/fitbitRoutes.js";
 import session from "express-session";
 import bodyParser from "body-parser";
 import connectDB from "../server/db/mongooseDB.js";
@@ -29,7 +31,10 @@ app.use((req, res, next) => {
 });
 
 
-app.use(cors({ origin: "*" }));
+app.use(cors({ 
+  origin: process.env.CORS_ORIGIN || "http://localhost:5173",
+  credentials: true
+}));
 app.use(express.json());
 
 app.get(`/`, (req, res) => {
@@ -40,6 +45,8 @@ app.get(`/`, (req, res) => {
 // app.use('/api/v1/login', usersRouter);
 app.use(`/api/v1/users`, usersRouter);
 app.use(`/api/v1/stats`, healthStatsRouter);
+app.use('/api/v1/oauth', oauthRouter);
+app.use('/api/v1/fitbit', fitbitRouter);
 
 const isAuthenticated = (req, res, next) => {
   if (req.session.user) {
