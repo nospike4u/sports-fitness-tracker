@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { OAuthService } from '../services/oauthService';
+import React, { useState, useEffect } from "react";
+import { OAuthService } from "../services/oauthService";
+import { X, MessageSquareWarningIcon } from "lucide-react";
 
 const FitbitConnection = ({ userId }) => {
   const [connectionStatus, setConnectionStatus] = useState(null);
@@ -27,16 +28,16 @@ const FitbitConnection = ({ userId }) => {
     try {
       setError(null);
       const scopes = [
-        'activity',
-        'heartrate',
-        'sleep',
-        'profile',
-        'nutrition',
-        'weight'
+        "activity",
+        "heartrate",
+        "sleep",
+        "profile",
+        "nutrition",
+        "weight",
       ];
-      
+
       const authData = await OAuthService.initializeFitbitAuth(userId, scopes);
-      
+
       // Redirect to Fitbit authorization
       window.location.href = authData.authUrl;
     } catch (err) {
@@ -66,7 +67,7 @@ const FitbitConnection = ({ userId }) => {
 
   if (loading) {
     return (
-      <div className="bg-white rounded-lg shadow-md p-6">
+      <div className="bg-[var(--color-bg)] rounded-lg shadow-md p-6">
         <div className="flex items-center justify-center">
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
           <span className="ml-2">Checking Fitbit connection...</span>
@@ -76,15 +77,19 @@ const FitbitConnection = ({ userId }) => {
   }
 
   return (
-    <div className="bg-white rounded-lg shadow-md p-6">
+    <div className="bg-[var(--color-bg)] border border-[var(--border)] rounded-lg shadow-md p-6">
       <div className="flex items-center justify-between mb-4">
-        <h3 className="text-lg font-semibold text-gray-900">Fitbit Connection</h3>
-        <div className={`px-3 py-1 rounded-full text-sm font-medium ${
-          connectionStatus?.connected 
-            ? 'bg-green-100 text-green-800' 
-            : 'bg-red-100 text-red-800'
-        }`}>
-          {connectionStatus?.connected ? 'Connected' : 'Not Connected'}
+        <h3 className="text-lg font-semibold text-[var(--muted-text)]">
+          Fitbit Connection
+        </h3>
+        <div
+          className={`px-3 py-1 rounded-md text-sm font-medium ${
+            connectionStatus?.connected
+              ? "bg-green-100 text-green-800"
+              : "bg-red-100 text-red-800"
+          }`}
+        >
+          {connectionStatus?.connected ? "Connected" : "Not Connected"}
         </div>
       </div>
 
@@ -97,23 +102,24 @@ const FitbitConnection = ({ userId }) => {
       {connectionStatus?.connected ? (
         <div>
           <div className="mb-4 space-y-2">
-            <p className="text-sm text-gray-600">
+            <p className="text-sm text-[var(--muted-text)]">
               <strong>Fitbit User ID:</strong> {connectionStatus.fitbitUserId}
             </p>
-            <p className="text-sm text-gray-600">
-              <strong>Scopes:</strong> {connectionStatus.scopes?.join(', ')}
+            <p className="text-sm text-[var(--muted-text)]">
+              <strong>Scopes:</strong> {connectionStatus.scopes?.join(", ")}
             </p>
-            <p className="text-sm text-gray-600">
-              <strong>Token Expires:</strong> {new Date(connectionStatus.expiresAt).toLocaleString()}
+            <p className="text-sm text-[var(--muted-text)]">
+              <strong>Token Expires:</strong>{" "}
+              {new Date(connectionStatus.expiresAt).toLocaleString()}
             </p>
             {connectionStatus.expiresSoon && (
               <p className="text-sm text-yellow-600 font-medium">
-                ⚠️ Token expires soon
+                <MessageSquareWarningIcon /> Token expires soon
               </p>
             )}
             {connectionStatus.isExpired && (
               <p className="text-sm text-red-600 font-medium">
-                ❌ Token has expired
+                <X /> Token has expired
               </p>
             )}
           </div>
@@ -121,13 +127,13 @@ const FitbitConnection = ({ userId }) => {
           <div className="flex space-x-3">
             <button
               onClick={refreshTokens}
-              className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors"
+              className="px-4 py-2 bg-blue-500 text-[var(--text-color)] rounded hover:bg-blue-600 transition-colors"
             >
               Refresh Tokens
             </button>
             <button
               onClick={disconnectFitbit}
-              className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition-colors"
+              className="px-4 py-2 bg-red-500 text-[var(--text-color)] rounded hover:bg-red-600 transition-colors"
             >
               Disconnect
             </button>
@@ -135,12 +141,12 @@ const FitbitConnection = ({ userId }) => {
         </div>
       ) : (
         <div>
-          <p className="text-gray-600 mb-4">
+          <p className="text-[var(--muted-text)] mb-4">
             Connect your Fitbit account to sync your health and fitness data.
           </p>
           <button
             onClick={connectFitbit}
-            className="w-full px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 transition-colors"
+            className="w-full px-4 py-2 bg-green-500 text-[var(--text-color)] rounded hover:bg-green-600 transition-colors"
           >
             Connect Fitbit
           </button>

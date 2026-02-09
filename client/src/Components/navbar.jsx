@@ -3,10 +3,13 @@ import { CgProfile } from "react-icons/cg";
 import { HiOutlineDocumentText } from "react-icons/hi";
 import logo from "../assets/radar_128dp_FFF_FILL0_wght400_GRAD0_opsz48.png";
 import { Link } from "react-router-dom";
+import { useTheme } from "../theme/useTheme.js";
+import { ToggleLeftIcon, ToggleRightIcon } from "lucide-react";
 
 const Navbar = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
+  const {theme, setTheme} = useTheme();
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
@@ -20,9 +23,9 @@ const Navbar = () => {
       }
     };
 
-    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
 
@@ -39,17 +42,26 @@ const Navbar = () => {
           <span className="compass ml-2 text-white">FitPulse</span>
         </Link>
       </div>
-      
+
       {/* Center/Right Section */}
       <div className="flex items-center space-x-6">
         {/* Documentation Link */}
         <div className="flex items-center">
-          <Link to="/documentation" className="flex space-x-1 items-center hover:text-gray-300 transition-colors">
+          <Link
+            to="/documentation"
+            className="flex space-x-1 items-center hover:text-gray-300 transition-colors"
+          >
             <HiOutlineDocumentText className="doc-icon text-xl text-white" />
             <span className="text-white">Documentation</span>
           </Link>
         </div>
-        
+
+        <button 
+        className="text-white"
+        onClick={()=> {setTheme(theme === "light"  ? "dark" : "light")}}>
+          {theme === "light" ? <ToggleRightIcon /> : <ToggleLeftIcon />}
+        </button>
+
         {/* Profile Dropdown */}
         <div className="dropdown dropdown-end relative" ref={dropdownRef}>
           {/* Trigger Button */}
@@ -67,8 +79,8 @@ const Navbar = () => {
               className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-white rounded-box w-52 absolute right-0 top-full z-50"
             >
               <li>
-                <Link 
-                  to="/editprofile" 
+                <Link
+                  to="/editprofile"
                   className="justify-between text-gray-700 hover:bg-gray-100"
                   onClick={() => setIsDropdownOpen(false)}
                 >
@@ -76,8 +88,8 @@ const Navbar = () => {
                 </Link>
               </li>
               <li>
-                <Link 
-                  to="/login" 
+                <Link
+                  to="/login"
                   className="text-gray-700 hover:bg-gray-100"
                   onClick={() => setIsDropdownOpen(false)}
                 >

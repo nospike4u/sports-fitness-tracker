@@ -10,6 +10,7 @@ import OAuthSuccess from "./Pages/OAuthSuccess.jsx";
 import OAuthError from "./Pages/OAuthError.jsx";
 import Navbar from "./Components/Navbar.jsx";
 import Footer from "./Components/Footer.jsx";
+import { ThemeContext } from "./theme/ThemeContext.jsx";
 
 function App() {
  

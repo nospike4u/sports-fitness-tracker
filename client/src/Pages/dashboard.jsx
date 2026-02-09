@@ -31,14 +31,14 @@ const Dashboard = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gray-100 p-6">
+    <div className="min-h-screen bg-[var(--color-bg)] p-6">
       <div className="max-w-7xl mx-auto">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">
+          <h1 className="text-3xl font-bold text-[var(--text-color)] mb-2">
             Sports Fitness Tracker Dashboard
           </h1>
           {user && (
-            <p className="text-gray-600">Welcome back, {user.name}!</p>
+            <p className="text-[var(--muted-text)]">Welcome back, {user.name}!</p>
           )}
         </div>
 
@@ -53,11 +53,11 @@ const Dashboard = () => {
         </div>
 
         {/* Sample Data Section */}
-        <div className="bg-white rounded-lg shadow-md p-6">
-          <h2 className="text-xl font-semibold text-gray-900 mb-4">Sample Activities</h2>
+        <div className="bg[var(--color-bg)] rounded-lg shadow-md p-6">
+          <h2 className="text-xl font-semibold text-[var(--text-color)] mb-4">Sample Activities</h2>
           <ul className="space-y-2">
             {activities.map(item => (
-              <li key={item.id} className="p-3 bg-gray-50 rounded border">
+              <li key={item.id} className="p-3 bg-[var(--color-bg)] border-[var(--border)] rounded border-2">
                 {item.title}
               </li>
             ))}
