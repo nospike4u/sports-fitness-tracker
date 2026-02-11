@@ -191,9 +191,10 @@ router.get('/summary/:userId', ensureValidToken, async (req, res) => {
     const targetDate = date || 'today';
 
     // Fetch multiple endpoints for comprehensive summary
-    const [activities, heartRate, sleep] = await Promise.allSettled([
+    const [activities, heartRate, heartRateIntraday, sleep] = await Promise.allSettled([
       makeFitbitApiRequest(req.fitbitToken.accessToken, `/user/-/activities/date/${targetDate}.json`),
       makeFitbitApiRequest(req.fitbitToken.accessToken, `/user/-/activities/heart/date/${targetDate}/1d.json`),
+      makeFitbitApiRequest(req.fitbitToken.accessToken, `/user/-/activities/heart/date/${targetDate}/1d/1min.json`),
       makeFitbitApiRequest(req.fitbitToken.accessToken, `/user/-/sleep/date/${targetDate}.json`)
     ]);
 
@@ -201,12 +202,14 @@ router.get('/summary/:userId', ensureValidToken, async (req, res) => {
       date: targetDate,
       activities: activities.status === 'fulfilled' ? activities.value : null,
       heartRate: heartRate.status === 'fulfilled' ? heartRate.value : null,
+      heartRateIntraday: heartRateIntraday.status === 'fulfilled' ? heartRateIntraday.value['activities-heart-intraday'] : null,
       sleep: sleep.status === 'fulfilled' ? sleep.value : null,
       errors: []
     };
 
     if (activities.status === 'rejected') summary.errors.push('activities');
     if (heartRate.status === 'rejected') summary.errors.push('heartRate');
+    if (heartRateIntraday.status === 'rejected') summary.errors.push('heartRateIntraday');
     if (sleep.status === 'rejected') summary.errors.push('sleep');
 
     res.json(summary);

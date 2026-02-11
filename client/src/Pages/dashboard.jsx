@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import FitbitConnection from "../Components/FitbitConnection";
 import FitbitData from "../Components/FitbitData";
+import CorporatePartnerBadge from "../Components/CorporatePartnerBadge";
+import PerksAndClasses from "../Components/PerksAndClasses";
 
 const Dashboard = () => {
   const [activities, setActivities] = useState([]);
@@ -13,7 +15,9 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchActivities = async () => {
       try {
-        const response = await axios.get('https://jsonplaceholder.typicode.com/todos/');
+        const response = await axios.get(
+          "https://jsonplaceholder.typicode.com/todos/",
+        );
         console.log(response.data); // Log the response data to check its structure
         setActivities(response.data.slice(0, 5)); // Limit to first 5 items
       } catch (error) {
@@ -23,10 +27,12 @@ const Dashboard = () => {
 
     fetchActivities();
 
-    // Mock user data
+    // Mock user data - including corporate membership info
     setUser({
       id: mockUserId,
-      name: "Dominic Spike"
+      name: "Dominic Spike",
+      corporateMember: true,
+      companyName: "Seibert Media",
     });
   }, []);
 
@@ -38,13 +44,27 @@ const Dashboard = () => {
             Sports Fitness Tracker Dashboard
           </h1>
           {user && (
-            <p className="text-[var(--muted-text)]">Welcome back, {user.name}!</p>
+            <div className="space-y-3">
+              <p className="text-[var(--muted-text)]">
+                Welcome back, {user.name}!
+              </p>
+              {user.corporateMember && (
+                <CorporatePartnerBadge companyName={user.companyName} />
+              )}
+            </div>
           )}
         </div>
 
         {/* Fitbit Connection Section */}
         <div className="mb-8">
           <FitbitConnection userId={mockUserId} />
+        </div>
+
+        {/* Perks & Classes Section */}
+        <div className="mb-8">
+          <PerksAndClasses
+            userType={user?.corporateMember ? "corporate" : "individual"}
+          />
         </div>
 
         {/* Fitbit Data Section */}
@@ -54,10 +74,15 @@ const Dashboard = () => {
 
         {/* Sample Data Section */}
         <div className="bg[var(--color-bg)] rounded-lg shadow-md p-6">
-          <h2 className="text-xl font-semibold text-[var(--text-color)] mb-4">Sample Activities</h2>
+          <h2 className="text-xl font-semibold text-[var(--text-color)] mb-4">
+            Sample Activities
+          </h2>
           <ul className="space-y-2">
-            {activities.map(item => (
-              <li key={item.id} className="p-3 bg-[var(--color-bg)] border-[var(--border)] rounded border-2">
+            {activities.map((item) => (
+              <li
+                key={item.id}
+                className="p-3 bg-[var(--color-bg)] border-[var(--border)] rounded border-2"
+              >
                 {item.title}
               </li>
             ))}
