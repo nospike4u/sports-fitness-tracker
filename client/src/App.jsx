@@ -11,7 +11,7 @@ import OAuthError from "./Pages/OAuthError.jsx";
 import Navbar from "./Components/Navbar.jsx";
 import Footer from "./Components/Footer.jsx";
 import { ThemeContext } from "./theme/ThemeContext.jsx";
-import Test from "./Components/Test.jsx";
+// import Test from "./Components/Test.jsx";
 
 function App() {
  
@@ -24,7 +24,7 @@ function App() {
       <div className="flex flex-col min-h-screen">
         {/* Header */}
         <Navbar/>
-        <Test />
+        {/* <Test /> */}
         {/* Main content area that grows to push footer down */}
         <main className="flex-grow">
           <Routes>
